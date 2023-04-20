@@ -13,6 +13,8 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "removeContact":
+      const removedContact = await contacts.removeContact(id);
+      console.log(removedContact);
       break;
     case "addContact":
       const addedContact = await contacts.addContact({ name, email, phone });
@@ -24,9 +26,10 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 };
 // invokeAction({ action: "getAll" });
 // invokeAction({ action: "getByOneId", id: "vza2RIzNGIwutCVCs4mCL" });
-invokeAction({
-  action: "addContact",
-  name: "Mykola",
-  email: "mykola1977bm@gmail.com",
-  phone: "+380964556787",
-});
+// invokeAction({
+//   action: "addContact",
+//   name: "Nykolai",
+//   email: "nykola@ukr.com",
+//   phone: "+887 445 78 98",
+// });
+invokeAction({ action: "removeContact", id: "KD0ifSPmtxABXr1gM5fYL" });
