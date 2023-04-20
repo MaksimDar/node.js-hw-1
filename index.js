@@ -1,35 +1,40 @@
 const contacts = require("./contacts");
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
-    case "getAll":
+    case "list":
       const data = await contacts.listContacts();
-      console.log(data);
+      console.table(data);
 
       break;
-    case "getByOneId":
+    case "get":
       const oneContact = await contacts.getContactById(id);
       console.log(oneContact);
       break;
 
-    case "removeContact":
-      const removedContact = await contacts.removeContact(id);
-      console.log(removedContact);
-      break;
-    case "addContact":
+    case "add":
       const addedContact = await contacts.addContact({ name, email, phone });
       console.log(addedContact);
       break;
+    case "remove":
+      const removedContact = await contacts.removeContact(id);
+      console.log(removedContact);
+      break;
+
     default:
       break;
   }
 };
-// invokeAction({ action: "getAll" });
-// invokeAction({ action: "getByOneId", id: "vza2RIzNGIwutCVCs4mCL" });
-// invokeAction({
-//   action: "addContact",
-//   name: "Nykolai",
-//   email: "nykola@ukr.com",
-//   phone: "+887 445 78 98",
-// });
-invokeAction({ action: "removeContact", id: "KD0ifSPmtxABXr1gM5fYL" });
+invokeAction(argv);
